@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AI-powered personal budgeting agent that automatically plans your monthly budget based on income, expenses, and savings goals." />
+  <title>Automated Monthly Budget Planning Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="header">
+    <div class="header__icon">🤖</div>
+    <h1 class="header__title">Automated Monthly Budget Planning Agent</h1>
+    <p class="header__subtitle">AI-powered assistant that analyzes your finances and creates a personalized monthly budget</p>
+  </header>
+
+  <main class="container">
+
+    <!-- ===== Agent Status Indicator ===== -->
+    <div class="agent-status" id="agentStatus">
+      <span class="agent-status__dot"></span>
+      <span class="agent-status__text">Agent ready — enter your details below</span>
+    </div>
+
+    <!-- ===== Input Form ===== -->
+    <form id="budgetForm" class="card card--form" autocomplete="off">
+
+      <!-- Income -->
+      <section class="form-section">
+        <h2 class="form-section__title">💰 Income</h2>
+        <div class="field">
+          <label for="income">Monthly Income (₹)</label>
+          <input type="number" id="income" name="income" min="0" step="100" placeholder="e.g. 50000" required />
+        </div>
+      </section>
+
+      <!-- Fixed Expenses -->
+      <section class="form-section">
+        <h2 class="form-section__title">🏠 Fixed Expenses</h2>
+        <div class="field-row">
+          <div class="field">
+            <label for="rent">Rent / EMI (₹)</label>
+            <input type="number" id="rent" name="rent" min="0" step="100" placeholder="0" />
+          </div>
+          <div class="field">
+            <label for="utilities">Utility Bills (₹)</label>
+            <input type="number" id="utilities" name="utilities" min="0" step="100" placeholder="0" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Variable Expenses -->
+      <section class="form-section">
+        <h2 class="form-section__title">🛒 Variable Expenses</h2>
+        <div class="field-row">
+          <div class="field">
+            <label for="food">Food (₹)</label>
+            <input type="number" id="food" name="food" min="0" step="100" placeholder="0" />
+          </div>
+          <div class="field">
+            <label for="transport">Transportation (₹)</label>
+            <input type="number" id="transport" name="transport" min="0" step="100" placeholder="0" />
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="entertainment">Entertainment (₹)</label>
+            <input type="number" id="entertainment" name="entertainment" min="0" step="100" placeholder="0" />
+          </div>
+          <div class="field">
+            <label for="other">Other Expenses (₹)</label>
+            <input type="number" id="other" name="other" min="0" step="100" placeholder="0" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Savings Goal -->
+      <section class="form-section">
+        <h2 class="form-section__title">🎯 Savings Goal</h2>
+        <div class="field">
+          <label for="savings_goal">Desired Monthly Savings (₹)</label>
+          <input type="number" id="savings_goal" name="savings_goal" min="0" step="100" placeholder="e.g. 10000" />
+        </div>
+      </section>
+
+      <button type="submit" class="btn" id="submitBtn">
+        <span class="btn__text">Generate Budget Plan</span>
+        <span class="btn__loader" hidden></span>
+      </button>
+    </form>
+
+    <!-- ===== Results (hidden until generated) ===== -->
+    <div id="results" class="results" hidden>
+
+      <!-- Budget Plan Card -->
+      <div class="card card--plan" id="budgetPlan"></div>
+
+      <!-- Stats Row -->
+      <div class="stats-row" id="statsRow"></div>
+
+      <!-- Warnings -->
+      <div id="warningsSection"></div>
+
+      <!-- Recommendations -->
+      <div id="recsSection"></div>
+    </div>
+
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <p>Built as a mini-project demonstration of an AI Agent architecture&nbsp; ·&nbsp; Perceive → Analyze → Reason → Act</p>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

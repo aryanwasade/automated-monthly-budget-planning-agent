@@ -1,0 +1,332 @@
+/* ================================================================
+   Automated Monthly Budget Planning Agent — Stylesheet
+   Clean, modern design with a dark card UI and subtle gradients.
+   ================================================================ */
+
+/* ---------- Reset & Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Colour palette */
+  --bg:          #0f1117;
+  --surface:     #1a1d27;
+  --surface-alt: #22263200;
+  --border:      #2e3345;
+  --text:        #e4e6ed;
+  --text-muted:  #8b90a0;
+  --accent:      #6c63ff;
+  --accent-glow: rgba(108, 99, 255, .25);
+  --green:       #34d399;
+  --green-bg:    rgba(52, 211, 153, .1);
+  --yellow:      #fbbf24;
+  --yellow-bg:   rgba(251, 191, 36, .1);
+  --red:         #f87171;
+  --red-bg:      rgba(248, 113, 113, .1);
+
+  /* Typography */
+  --font: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Spacing */
+  --radius: 14px;
+  --radius-sm: 8px;
+}
+
+html {
+  font-size: 15px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ---------- Header ---------- */
+.header {
+  text-align: center;
+  padding: 3rem 1.5rem 2rem;
+  background: linear-gradient(170deg, #1e1b4b 0%, var(--bg) 70%);
+}
+.header__icon {
+  font-size: 2.5rem;
+  margin-bottom: .5rem;
+}
+.header__title {
+  font-size: 1.65rem;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  background: linear-gradient(135deg, #a78bfa, #6c63ff, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.header__subtitle {
+  color: var(--text-muted);
+  font-size: .92rem;
+  margin-top: .35rem;
+  max-width: 480px;
+  margin-inline: auto;
+}
+
+/* ---------- Container ---------- */
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 1.25rem 3rem;
+}
+
+/* ---------- Agent Status ---------- */
+.agent-status {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .65rem 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+  font-size: .82rem;
+  color: var(--text-muted);
+}
+.agent-status__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2s infinite;
+}
+.agent-status--working .agent-status__dot {
+  background: var(--yellow);
+}
+.agent-status--working .agent-status__text {
+  color: var(--yellow);
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: .4; }
+}
+
+/* ---------- Cards ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  margin-bottom: 1.25rem;
+}
+
+/* ---------- Form Sections ---------- */
+.form-section {
+  margin-bottom: 1.5rem;
+}
+.form-section__title {
+  font-size: .95rem;
+  font-weight: 600;
+  margin-bottom: .75rem;
+  color: var(--text);
+}
+
+/* ---------- Fields ---------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  flex: 1;
+}
+.field label {
+  font-size: .8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.field input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: .6rem .85rem;
+  font-size: .95rem;
+  color: var(--text);
+  font-family: var(--font);
+  transition: border-color .2s, box-shadow .2s;
+}
+.field input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+.field input::placeholder {
+  color: #555;
+}
+
+.field-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: .75rem;
+}
+
+/* ---------- Button ---------- */
+.btn {
+  width: 100%;
+  padding: .85rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, #6c63ff, #818cf8);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .2s;
+}
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px var(--accent-glow);
+}
+.btn:active {
+  transform: translateY(0);
+}
+.btn:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+  transform: none;
+}
+.btn__loader {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .6s linear infinite;
+  vertical-align: middle;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- Results ---------- */
+.results {
+  animation: fadeIn .4s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Budget Plan Table ---------- */
+.plan-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.plan-group {
+  margin-bottom: 1rem;
+}
+.plan-group__label {
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-muted);
+  margin-bottom: .4rem;
+  font-weight: 600;
+}
+.plan-row {
+  display: flex;
+  justify-content: space-between;
+  padding: .4rem 0;
+  font-size: .92rem;
+}
+.plan-row--total {
+  border-top: 1px solid var(--border);
+  margin-top: .5rem;
+  padding-top: .65rem;
+  font-weight: 700;
+  font-size: 1rem;
+}
+.plan-row .amount {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+.plan-row .amount--green  { color: var(--green); }
+.plan-row .amount--red    { color: var(--red);   }
+.plan-row .amount--accent { color: var(--accent); }
+
+/* ---------- Stats Row ---------- */
+.stats-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.stat-card {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-align: center;
+}
+.stat-card__value {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.stat-card__label {
+  font-size: .75rem;
+  color: var(--text-muted);
+  margin-top: .15rem;
+}
+
+/* ---------- Alert boxes (warnings / recommendations) ---------- */
+.alert-section {
+  margin-bottom: 1.25rem;
+}
+.alert-section__title {
+  font-size: .95rem;
+  font-weight: 600;
+  margin-bottom: .6rem;
+}
+.alert {
+  padding: .75rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: .88rem;
+  line-height: 1.5;
+  margin-bottom: .5rem;
+}
+.alert--warn {
+  background: var(--yellow-bg);
+  border-left: 3px solid var(--yellow);
+  color: var(--yellow);
+}
+.alert--tip {
+  background: var(--green-bg);
+  border-left: 3px solid var(--green);
+  color: var(--green);
+}
+.alert--danger {
+  background: var(--red-bg);
+  border-left: 3px solid var(--red);
+  color: var(--red);
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: .78rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 540px) {
+  .field-row { flex-direction: column; gap: .75rem; }
+  .stats-row { flex-direction: column; }
+  .header__title { font-size: 1.3rem; }
+}
