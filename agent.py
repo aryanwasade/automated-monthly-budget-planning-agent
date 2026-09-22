@@ -214,7 +214,7 @@ Please analyze this budget and provide your expert advice.
         # Send prompt to Gemini using the new google.genai SDK
         # PROMPT is the system instruction, user_prompt contains the financial data
         response = self.client.models.generate_content(
-            model="gemini-2.0-flash",
+            model="gemini-3.6-flash",
             contents=PROMPT + "\n\n" + user_prompt,
             config={
                 "temperature": 0.7,
