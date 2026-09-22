@@ -2,9 +2,10 @@
  * Automated Monthly Budget Planning Agent — Frontend Logic
  * =========================================================
  * Handles:
- *  1. Collecting form data
- *  2. Sending it to the Flask /api/generate endpoint
- *  3. Rendering the agent's budget plan in the UI
+ *  1. Sidebar with API key management
+ *  2. Collecting form data
+ *  3. Sending it to the Flask /api/generate endpoint
+ *  4. Rendering the agent's budget plan in the UI
  */
 
 // ---- DOM references ----
@@ -15,6 +16,75 @@ const btnLoader  = submitBtn.querySelector(".btn__loader");
 const agentBox   = document.getElementById("agentStatus");
 const agentText  = agentBox.querySelector(".agent-status__text");
 const resultsDiv = document.getElementById("results");
+
+// ---- Sidebar DOM references ----
+const sidebar       = document.getElementById("sidebar");
+const sidebarToggle = document.getElementById("sidebarToggle");
+const sidebarClose  = document.getElementById("sidebarClose");
+const sidebarOverlay= document.getElementById("sidebarOverlay");
+const apiKeyInput   = document.getElementById("apiKeyInput");
+const saveKeyBtn    = document.getElementById("saveKeyBtn");
+const toggleKeyVis  = document.getElementById("toggleKeyVis");
+const keyBadge      = document.getElementById("keyBadge");
+
+// ---- Sidebar logic ----
+
+function openSidebar() {
+  sidebar.classList.add("open");
+  sidebarOverlay.classList.add("active");
+}
+function closeSidebar() {
+  sidebar.classList.remove("open");
+  sidebarOverlay.classList.remove("active");
+}
+
+sidebarToggle.addEventListener("click", openSidebar);
+sidebarClose.addEventListener("click", closeSidebar);
+sidebarOverlay.addEventListener("click", closeSidebar);
+
+// Toggle API key visibility
+toggleKeyVis.addEventListener("click", () => {
+  const isPassword = apiKeyInput.type === "password";
+  apiKeyInput.type = isPassword ? "text" : "password";
+});
+
+// Save API key to localStorage
+saveKeyBtn.addEventListener("click", () => {
+  const key = apiKeyInput.value.trim();
+  if (key) {
+    localStorage.setItem("gemini_api_key", key);
+    updateKeyBadge(true);
+    // Brief visual feedback
+    saveKeyBtn.textContent = "Saved!";
+    setTimeout(() => { saveKeyBtn.textContent = "Save Key"; }, 1500);
+  } else {
+    localStorage.removeItem("gemini_api_key");
+    updateKeyBadge(false);
+  }
+});
+
+// Update badge status
+function updateKeyBadge(isSet) {
+  if (isSet) {
+    keyBadge.textContent = "saved";
+    keyBadge.className = "sidebar__badge sidebar__badge--set";
+  } else {
+    keyBadge.textContent = "not set";
+    keyBadge.className = "sidebar__badge sidebar__badge--notset";
+  }
+}
+
+// Load saved key on page load
+(function loadSavedKey() {
+  const savedKey = localStorage.getItem("gemini_api_key");
+  if (savedKey) {
+    apiKeyInput.value = savedKey;
+    updateKeyBadge(true);
+  } else {
+    updateKeyBadge(false);
+  }
+})();
+
 
 // ---- Form submission ----
 form.addEventListener("submit", async (e) => {
@@ -31,6 +101,12 @@ form.addEventListener("submit", async (e) => {
     other:        val("other"),
     savings_goal: val("savings_goal"),
   };
+
+  // Include API key from sidebar (if set)
+  const apiKey = localStorage.getItem("gemini_api_key") || "";
+  if (apiKey) {
+    data.api_key = apiKey;
+  }
 
   // Quick client-side validation
   if (data.income <= 0) {
@@ -84,7 +160,7 @@ function setLoading(on) {
     ? "agent-status agent-status--working"
     : "agent-status";
   agentText.textContent   = on
-    ? "Agent is analyzing your finances…"
+    ? "Agent is analyzing your finances..."
     : "Agent ready — enter your details below";
 }
 
@@ -98,6 +174,18 @@ function renderResults(plan) {
 
   // -- Budget Plan Card --
   document.getElementById("budgetPlan").innerHTML = buildPlanHTML(plan);
+
+  // -- AI Insight (from Gemini LLM) --
+  const insightEl = document.getElementById("aiInsightSection");
+  if (plan.ai_insight) {
+    insightEl.innerHTML = `
+      <div class="card card--insight">
+        <div class="plan-title">🧠 AI Financial Insight</div>
+        <p class="ai-insight-text">${plan.ai_insight}</p>
+      </div>`;
+  } else {
+    insightEl.innerHTML = "";
+  }
 
   // -- Stats Row --
   document.getElementById("statsRow").innerHTML = `

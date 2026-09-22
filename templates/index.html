@@ -12,11 +12,72 @@
 </head>
 <body>
 
+  <!-- ===== Sidebar Toggle Button ===== -->
+  <button class="sidebar-toggle" id="sidebarToggle" title="Settings">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3"></circle>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+    </svg>
+  </button>
+
+  <!-- ===== Sidebar Panel ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__header">
+      <h2 class="sidebar__title">Setup</h2>
+      <button class="sidebar__close" id="sidebarClose">&times;</button>
+    </div>
+
+    <div class="sidebar__content">
+      <!-- Gemini API Key -->
+      <div class="sidebar__field">
+        <label class="sidebar__label">
+          Gemini API Key
+          <span class="sidebar__badge" id="keyBadge">not set</span>
+        </label>
+        <div class="sidebar__input-wrap">
+          <input
+            type="password"
+            id="apiKeyInput"
+            class="sidebar__input"
+            placeholder="Paste your API key here"
+            autocomplete="off"
+          />
+          <button class="sidebar__eye" id="toggleKeyVis" title="Show/Hide key">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </button>
+        </div>
+        <button class="sidebar__save-btn" id="saveKeyBtn">Save Key</button>
+        <p class="sidebar__hint">
+          Get a free key at <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com</a>
+        </p>
+      </div>
+
+      <hr class="sidebar__divider" />
+
+      <!-- How it works -->
+      <div class="sidebar__section">
+        <h3 class="sidebar__section-title">How it works</h3>
+        <ol class="sidebar__steps">
+          <li>You enter your monthly income and expenses</li>
+          <li>The agent calculates totals and ratios</li>
+          <li>Gemini AI analyzes your budget using a structured prompt</li>
+          <li>You receive personalized warnings, recommendations, and an AI insight</li>
+        </ol>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===== Sidebar Overlay ===== -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
   <!-- ===== Header ===== -->
   <header class="header">
     <div class="header__icon">🤖</div>
     <h1 class="header__title">Automated Monthly Budget Planning Agent</h1>
-    <p class="header__subtitle">AI-powered assistant that analyzes your finances and creates a personalized monthly budget</p>
+    <p class="header__subtitle">Agentic AI assistant powered by Google Gemini — analyzes your finances and creates a personalized monthly budget</p>
   </header>
 
   <main class="container">
@@ -100,6 +161,9 @@
       <!-- Budget Plan Card -->
       <div class="card card--plan" id="budgetPlan"></div>
 
+      <!-- AI Insight from Gemini -->
+      <div id="aiInsightSection"></div>
+
       <!-- Stats Row -->
       <div class="stats-row" id="statsRow"></div>
 
@@ -114,7 +178,7 @@
 
   <!-- ===== Footer ===== -->
   <footer class="footer">
-    <p>Built as a mini-project demonstration of an AI Agent architecture&nbsp; ·&nbsp; Perceive → Analyze → Reason → Act</p>
+    <p>Built as a mini-project demonstration of Agentic AI&nbsp; ·&nbsp; Perceive → Analyze → Reason (Gemini LLM) → Act</p>
   </footer>
 
   <script src="/static/script.js"></script>
